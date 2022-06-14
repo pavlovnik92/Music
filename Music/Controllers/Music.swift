@@ -10,7 +10,8 @@ import UIKit
 class Music: UIViewController {
     
     //MARK: Private Properties
-    private let musicTableView = UITableView()
+    private var musicTableView = UITableView()
+    private var musicArray = [SongParameters]()
 
     
     //MARK: ViewDidLoad
@@ -20,33 +21,91 @@ class Music: UIViewController {
         view.backgroundColor = .systemBackground
         
         createSearchBar()
+
+        setupTableView()
+        setupConstraintsForTableView()
     }
     
     //MARK: - SetupSearchBar
     private func createSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
-        
-        searchController.delegate = self
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchBar.delegate = self
     }
     
     //MARK: - SetupTableView
     private func setupTableView() {
         musicTableView.register(MusicCell.self, forCellReuseIdentifier: MusicCell.identifier)
-        musicTableView.backgroundColor = view.backgroundColor
+        musicTableView.frame = view.bounds
+        musicTableView.backgroundColor = .systemBackground
         
         musicTableView.delegate = self
         musicTableView.dataSource = self
     }
     
-    private func setupConstraintsFortavleView() {
+    private func setupConstraintsForTableView() {
         view.addSubview(musicTableView)
         
         musicTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        musicTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        musicTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 130).isActive = true
         musicTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         musicTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         musicTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+}
+
+
+
+
+
+//MARK: - UISearchBarDelegate
+extension Music: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        NetworkDataFetcher.shared.fetchMusic(request: searchText) { [weak self] (searchResults) in
+            guard let fechedMusic = searchResults else { return }
+            self?.musicArray = fechedMusic.results
+            self?.musicTableView.reloadData()
+        }
+    }
+}
+
+
+//MARK: - UITableViewDelegate, UITableViewDataSource
+extension Music: UITableViewDelegate, UITableViewDataSource {
+
+    // number
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return musicArray.count
+    }
+
+    //cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: MusicCell.identifier, for: indexPath) as! MusicCell
+
+
+
+        return cell
+    }
+    
+    // height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
+    // delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            musicArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+        }
     }
 }

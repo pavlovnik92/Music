@@ -10,6 +10,8 @@ import Foundation
 
 class NetworkDataFetcher {
     
+    static let shared = NetworkDataFetcher()
+    
     private var networkService = NetworkService()
     
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void) {
