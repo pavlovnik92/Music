@@ -6,11 +6,27 @@
 //
 
 import Foundation
+import UIKit
 
 
 class NetworkDataFetcher {
     
     static let shared = NetworkDataFetcher()
+    
+    func fetchImage(imageView: UIImageView, URLString: String?) {
+        
+        if let URLString = URLString {
+            let URL = URL(string: URLString)
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: URL!) { data, _, error in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async {
+                    imageView.image = UIImage(data: data)
+                }
+            }
+            task.resume()
+        }
+    }
     
     private var networkService = NetworkService()
     
@@ -21,6 +37,8 @@ class NetworkDataFetcher {
                 print("Error received requesting data: \(error.localizedDescription)")
                 completion(nil)
             }
+            let decode = self.decodeJSON(type: SearchResaults.self, data: data)
+            completion(decode)
         }
     }
     

@@ -13,9 +13,9 @@ class MusicCell: UITableViewCell {
     static let identifier = "TableViewCell"
 
     //MARK: Private properties
-    private let albumImageView = UIImageView()
-    private let artistNameLabel = UILabel()
-    private let trackNameLabel = UILabel()
+     let albumImageView = UIImageView()
+     let artistNameLabel = UILabel()
+     let trackNameLabel = UILabel()
     
     
     //MARK: LayoutSubviews
@@ -37,6 +37,7 @@ class MusicCell: UITableViewCell {
     private func setupAlbumImage() {
         albumImageView.backgroundColor = .gray
         albumImageView.layer.cornerRadius = 3
+        albumImageView.clipsToBounds = true
         contentView.addSubview(albumImageView)
     }
     
@@ -51,7 +52,6 @@ class MusicCell: UITableViewCell {
     
     //MARK: - SetupTrackName
     private func setupTrackName() {
-        trackNameLabel.text = "Happy Little Pill"
         trackNameLabel.font = .systemFont(ofSize: 16, weight: .regular)
         trackNameLabel.textColor = .label
         contentView.addSubview(trackNameLabel)
@@ -68,7 +68,6 @@ class MusicCell: UITableViewCell {
     
     //MARK: - SetupArtistNameLabel
     private func setupArtistNameLabel() {
-        artistNameLabel.text = "Eminem"
         artistNameLabel.textColor = .gray
         artistNameLabel.font = .systemFont(ofSize: 13, weight: .light)
         contentView.addSubview(artistNameLabel)

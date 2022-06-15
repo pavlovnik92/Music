@@ -69,6 +69,7 @@ extension Music: UISearchBarDelegate {
             guard let fechedMusic = searchResults else { return }
             self?.musicArray = fechedMusic.results
             self?.musicTableView.reloadData()
+            
         }
     }
 }
@@ -87,7 +88,11 @@ extension Music: UITableViewDelegate, UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: MusicCell.identifier, for: indexPath) as! MusicCell
 
+        let track = musicArray[indexPath.row]
+        cell.trackNameLabel.text = track.trackName
+        cell.artistNameLabel.text = track.artistName
 
+        NetworkDataFetcher.shared.fetchImage(imageView: cell.albumImageView, URLString: track.artworkUrl100)
 
         return cell
     }
@@ -95,17 +100,5 @@ extension Music: UITableViewDelegate, UITableViewDataSource {
     // height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
-    }
-    
-    // delete
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            musicArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .left)
-        }
     }
 }
