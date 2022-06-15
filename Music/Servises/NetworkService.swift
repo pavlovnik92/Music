@@ -8,7 +8,7 @@
 import Foundation
 
 
-class NetworkService {
+final class NetworkService {
     
     func createRequest(request: String?, completion: @escaping (Data?, Error?) -> Void) {
         

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Music: UIViewController {
+final class Music: UIViewController {
     
     //MARK: Private Properties
     private var musicTableView = UITableView()
@@ -39,6 +39,7 @@ class Music: UIViewController {
         musicTableView.register(MusicCell.self, forCellReuseIdentifier: MusicCell.identifier)
         musicTableView.frame = view.bounds
         musicTableView.backgroundColor = .systemBackground
+        musicTableView.separatorStyle = .none
         
         musicTableView.delegate = self
         musicTableView.dataSource = self
@@ -49,7 +50,7 @@ class Music: UIViewController {
         
         musicTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        musicTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 130).isActive = true
+        musicTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         musicTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         musicTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         musicTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

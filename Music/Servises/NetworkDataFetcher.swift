@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class NetworkDataFetcher {
+final class NetworkDataFetcher {
     
     static let shared = NetworkDataFetcher()
     

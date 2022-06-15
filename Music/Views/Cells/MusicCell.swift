@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MusicCell: UITableViewCell {
+final class MusicCell: UITableViewCell {
     
     //MARK: Static properties
     static let identifier = "TableViewCell"
@@ -16,6 +16,7 @@ class MusicCell: UITableViewCell {
      let albumImageView = UIImageView()
      let artistNameLabel = UILabel()
      let trackNameLabel = UILabel()
+
     
     
     //MARK: LayoutSubviews
@@ -30,6 +31,8 @@ class MusicCell: UITableViewCell {
         
         setupArtistNameLabel()
         setupConstraintsForArtistNameLabel()
+        
+        createSeparatorLines()
   
     }
     
@@ -46,8 +49,8 @@ class MusicCell: UITableViewCell {
         
         albumImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
         albumImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        albumImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        albumImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        albumImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        albumImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     //MARK: - SetupTrackName
@@ -80,5 +83,15 @@ class MusicCell: UITableViewCell {
         artistNameLabel.leftAnchor.constraint(equalTo: albumImageView.rightAnchor, constant: 18).isActive = true
         artistNameLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
         artistNameLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
+    }
+    
+    //MARK: - Separator lines
+    private func createSeparatorLines() {
+
+        // bottom
+        let bottonSeparatorLine = UIView(frame: CGRect(x: 89, y: 59.5, width: 300, height: 0.26))
+        bottonSeparatorLine.backgroundColor = .systemGray5
+        
+        contentView.addSubview(bottonSeparatorLine)
     }
 }
