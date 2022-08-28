@@ -1,17 +1,21 @@
 //
-//  NetworkDataFetcher.swift
+//  SearchResponseWorker.swift
 //  Music
 //
-//  Created by Alice Romanova on 10.06.2022.
+//  Created by Alice Romanova on 28.08.2022.
 //
 
-import Foundation
 import UIKit
 
+protocol SearchResponseLogic: AnyObject {
+    func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void)
+    func fetchImage(imageView: UIImageView, URLString: String?)
+}
 
-final class NetworkDataFetcher {
+
+final class SearchResponseWorker: SearchResponseLogic {
     
-    static let shared = NetworkDataFetcher()
+    var requestWorker: SearchRequestLogic?
     
     func fetchImage(imageView: UIImageView, URLString: String?) {
         
@@ -28,18 +32,16 @@ final class NetworkDataFetcher {
         }
     }
     
-    private var networkService = NetworkService()
-    
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void) {
-        
-        networkService.createRequest(request: request) { data, error in
+
+        requestWorker?.createRequest(request: request, completion: { data, error in
             if let error = error {
                 print("Error received requesting data: \(error.localizedDescription)")
                 completion(nil)
             }
             let decode = self.decodeJSON(type: SearchResaults.self, data: data)
             completion(decode)
-        }
+        })
     }
     
     private func decodeJSON<T: Decodable>(type: T.Type, data: Data?) -> T? {

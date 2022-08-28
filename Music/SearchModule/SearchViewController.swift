@@ -1,42 +1,46 @@
 //
-//  Music.swift
+//  SearchViewController.swift
 //  Music
 //
-//  Created by Alice Romanova on 10.06.2022.
+//  Created by Alice Romanova on 28.08.2022.
 //
 
 import UIKit
 
-final class Music: UIViewController {
-    
-    //MARK: Private Properties
-    private var musicTableView = UITableView()
-    private var musicArray = [SongParameters]()
+protocol SearchDisplaylogic: AnyObject {
+    func displayData(viewModel: Models.ModelType.ViewModel.ViewModelType)
+}
 
+
+final class SearchViewController: UIViewController {
     
-    //MARK: ViewDidLoad
+    var interactor: SearchBisnessLigic?
+    var router: SearchRoutingLogic?
+    
+    //MARK: - Properties
+    let musicTableView = UITableView()
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemBackground
         
-        createSearchBar()
-
-        setupTableView()
-        setupConstraintsForTableView()
     }
     
-    //MARK: - SetupSearchBar
-    private func createSearchBar() {
+    //MARK: - setupSearchBar
+    
+    private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        
         searchController.searchBar.delegate = self
     }
     
-    //MARK: - SetupTableView
+    //MARK: - setupTableView
+    
     private func setupTableView() {
-        musicTableView.register(MusicCell.self, forCellReuseIdentifier: MusicCell.identifier)
+        musicTableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
         musicTableView.frame = view.bounds
         musicTableView.backgroundColor = .systemBackground
         musicTableView.separatorStyle = .none
@@ -55,6 +59,8 @@ final class Music: UIViewController {
         musicTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         musicTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
+    
+    
 }
 
 
@@ -62,8 +68,8 @@ final class Music: UIViewController {
 
 
 //MARK: - UISearchBarDelegate
-extension Music: UISearchBarDelegate {
-    
+
+extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         NetworkDataFetcher.shared.fetchMusic(request: searchText) { [weak self] (searchResults) in
@@ -75,19 +81,16 @@ extension Music: UISearchBarDelegate {
     }
 }
 
+//MARK: - UITableViewDataSource
 
-//MARK: - UITableViewDelegate, UITableViewDataSource
-extension Music: UITableViewDelegate, UITableViewDataSource {
-
-    // number
+extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return musicArray.count
+        <#code#>
     }
-
-    //cell
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: MusicCell.identifier, for: indexPath) as! MusicCell
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as! SearchCell
 
         let track = musicArray[indexPath.row]
         cell.trackNameLabel.text = track.trackName
@@ -98,8 +101,21 @@ extension Music: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    // height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+}
+
+//MARK: - UITableViewDelegate
+
+extension SearchViewController: UITableViewDelegate {
+    
+}
+
+//MARK: - SearchDisplaylogic
+
+extension SearchViewController: SearchDisplaylogic {
+    func displayData(viewModel: Models.ModelType.ViewModel.ViewModelType) {
+        
     }
 }
