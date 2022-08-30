@@ -27,7 +27,7 @@ class AssemblyLayer {
         viewController.router = router
         
         interactor.presenter = presenter
-        interactor.responseWorker = responseWorker
+        interactor.service = responseWorker
         
         presenter.view = viewController
         

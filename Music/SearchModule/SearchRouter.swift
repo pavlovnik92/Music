@@ -22,7 +22,7 @@ final class SearchRouter: SearchRoutingLogic {
     }
     
     func popViewController() {
-        
+        navigationController?.popViewController(animated: true)
     }
     
     

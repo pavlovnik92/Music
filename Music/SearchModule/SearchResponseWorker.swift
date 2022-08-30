@@ -9,7 +9,7 @@ import UIKit
 
 protocol SearchResponseLogic: AnyObject {
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void)
-    func fetchImage(imageView: UIImageView, URLString: String?)
+    func fetchImage(URLString: String?) -> UIImage?
 }
 
 
@@ -17,7 +17,8 @@ final class SearchResponseWorker: SearchResponseLogic {
     
     var requestWorker: SearchRequestLogic?
     
-    func fetchImage(imageView: UIImageView, URLString: String?) {
+    func fetchImage(URLString: String?) -> UIImage? {
+        var image: UIImage?
         
         if let URLString = URLString {
             let URL = URL(string: URLString)
@@ -25,11 +26,12 @@ final class SearchResponseWorker: SearchResponseLogic {
             let task = session.dataTask(with: URL!) { data, _, error in
                 guard let data = data, error == nil else { return }
                 DispatchQueue.main.async {
-                    imageView.image = UIImage(data: data)
+                    image = UIImage(data: data)
                 }
             }
             task.resume()
         }
+        return image
     }
     
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void) {

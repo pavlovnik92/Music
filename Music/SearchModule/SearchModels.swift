@@ -5,7 +5,7 @@
 //  Created by Alice Romanova on 28.08.2022.
 //
 
-import Foundation
+import UIKit
 
 enum Models {
     
@@ -13,19 +13,23 @@ enum Models {
         
         struct Request {
             enum RequestType {
-                case some
+                case requestMusic(searchText: String)
+                case requestAlbumImage(URLString: String?)
             }
         }
         
         struct Response {
             enum responseType {
-                case some
+                case presentMusic(searchResponse: SearchResaults?)
+                case presentAlbumImage(image: UIImage?)
+                
             }
         }
         
         struct ViewModel {
             enum ViewModelType {
-                case some
+                case displayMusic(music: [SongParameters]?)
+                case displayAlbumImage(image: UIImage?, searchText: String)
             }
         }
     }

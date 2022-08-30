@@ -20,11 +20,20 @@ final class SearchViewController: UIViewController {
     //MARK: - Properties
     let musicTableView = UITableView()
     
+    var albumImage: UIImage!
+    // По другому не получилось вытащить массив из функции
+    var musicArray: [SongParameters] = []
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        view.backgroundColor = .systemBackground
+        
+        setupSearchBar()
+        
+        setupTableView()
+        setupConstraintsForTableView()
     }
     
     //MARK: - setupSearchBar
@@ -72,12 +81,7 @@ final class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        NetworkDataFetcher.shared.fetchMusic(request: searchText) { [weak self] (searchResults) in
-            guard let fechedMusic = searchResults else { return }
-            self?.musicArray = fechedMusic.results
-            self?.musicTableView.reloadData()
-            
-        }
+        interactor?.makeRequest(request: Models.ModelType.Request.RequestType.requestMusic(searchText: searchText))
     }
 }
 
@@ -85,7 +89,8 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        print(musicArray)
+        return musicArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,8 +100,10 @@ extension SearchViewController: UITableViewDataSource {
         let track = musicArray[indexPath.row]
         cell.trackNameLabel.text = track.trackName
         cell.artistNameLabel.text = track.artistName
-
-        NetworkDataFetcher.shared.fetchImage(imageView: cell.albumImageView, URLString: track.artworkUrl100)
+        
+        interactor?.requestAlbumImage(request: Models.ModelType.Request.RequestType.requestAlbumImage(URLString: track.artworkUrl100))
+        
+        cell.albumImageView.image = albumImage
 
         return cell
     }
@@ -116,6 +123,15 @@ extension SearchViewController: UITableViewDelegate {
 
 extension SearchViewController: SearchDisplaylogic {
     func displayData(viewModel: Models.ModelType.ViewModel.ViewModelType) {
-        
+        switch viewModel {
+            
+        case .displayMusic(let music):
+            
+            guard let music = music else { return }
+
+            musicArray = music
+            
+            musicTableView.reloadData()
+        }
     }
 }
