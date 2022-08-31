@@ -17,21 +17,26 @@ final class SearchResponseWorker: SearchResponseLogic {
     
     var requestWorker: SearchRequestLogic?
     
+    
     func fetchImage(URLString: String?) -> UIImageView? {
-        var imageview = UIImageView()
-        print("service", URLString)
+        
+        let imageView = UIImageView()
+
         if let URLString = URLString {
+            
             let URL = URL(string: URLString)
             let session = URLSession(configuration: .default)
+            
             let task = session.dataTask(with: URL!) { data, _, error in
                 guard let data = data, error == nil else { return }
+                
                 DispatchQueue.main.async {
-                    imageview.image = UIImage(data: data)
+                    imageView.image = UIImage(data: data)
                 }
             }
             task.resume()
         }
-        return imageview
+        return imageView
     }
     
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void) {

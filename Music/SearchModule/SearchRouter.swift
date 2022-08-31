@@ -11,10 +11,11 @@ protocol SearchRoutingLogic: AnyObject {
     func pushViewController()
     func popViewController()
 }
+  
 
 final class SearchRouter: SearchRoutingLogic {
     
-    var navigationController: UINavigationController?
+     var navigationController: UINavigationController?
     
     
     func pushViewController() {
@@ -24,6 +25,4 @@ final class SearchRouter: SearchRoutingLogic {
     func popViewController() {
         navigationController?.popViewController(animated: true)
     }
-    
-    
 }

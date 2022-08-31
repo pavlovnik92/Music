@@ -10,22 +10,33 @@ import UIKit
 class AssemblyLayer {
     
     static let shared = AssemblyLayer()
-
-     var navigationController = UINavigationController()
     
-    func createSearchModule() -> UIViewController {
+    
+    func createNavigationController() -> UINavigationController {
+        
+        let navigationController = UINavigationController()
+        let router = SearchRouter()
+        
+        router.navigationController = navigationController
+        navigationController.viewControllers = [createSearchModule(router: router)]
+        
+        return navigationController
+    }
+    
+    func createSearchModule(router: SearchRouter) -> UIViewController {
         
         let interactor = SearchInteractor()
         let presenter = SearchPresenter()
+        
         let viewController = SearchViewController()
-        let router = SearchRouter()
         let requestWorker = SearchRequestWorker()
         let responseWorker = SearchResponseWorker()
         
         //connections
+        
+        
         viewController.interactor = interactor
         viewController.router = router
-
         
         interactor.presenter = presenter
         interactor.service = responseWorker
@@ -33,9 +44,7 @@ class AssemblyLayer {
         presenter.view = viewController
         
         responseWorker.requestWorker = requestWorker
-        
-        router.navigationController = navigationController
-        
+
         return viewController
     }
 }

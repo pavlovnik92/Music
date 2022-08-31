@@ -21,14 +21,15 @@ final class SearchViewController: UIViewController {
     let musicTableView = UITableView()
     
     var albumImageView = UIImageView()
-    // По другому не получилось вытащить массив из функции
+    
+    // По другому не получилось вытащить массив из функции, если использовать тип any, то все рушится
     var musicArray: [SongParameters] = []
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .blue
+   
+        view.backgroundColor = .systemBackground
         
         setupSearchBar()
         
@@ -40,6 +41,7 @@ final class SearchViewController: UIViewController {
     
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
+        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -63,13 +65,11 @@ final class SearchViewController: UIViewController {
         
         musicTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        musicTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
+        musicTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         musicTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         musicTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         musicTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-    
-    
 }
 
 
@@ -88,8 +88,8 @@ extension SearchViewController: UISearchBarDelegate {
 //MARK: - UITableViewDataSource
 
 extension SearchViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return musicArray.count
     }
     
@@ -122,12 +122,12 @@ extension SearchViewController: UITableViewDelegate {
 //MARK: - SearchDisplaylogic
 
 extension SearchViewController: SearchDisplaylogic {
+    
     func displayData(data: Models.ModelType.ViewModel.ViewModelType) {
         
         switch data {
             
-        case .displayMusic(let music):
-            
+        case .displayMusic(music: let music):
             guard let music = music else { return }
 
             musicArray = music
@@ -135,7 +135,6 @@ extension SearchViewController: SearchDisplaylogic {
             musicTableView.reloadData()
             
         case .displayAlbumImage(imageView: let imageView):
-            
             guard let imageView = imageView else { return }
             
             self.albumImageView = imageView

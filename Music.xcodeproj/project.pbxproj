@@ -95,12 +95,12 @@
 			path = AssemblyLayer;
 			sourceTree = "<group>";
 		};
-		D2180B7D28BB3D5B00D5CC9D /* Model */ = {
+		D2180B7D28BB3D5B00D5CC9D /* GlobalModel */ = {
 			isa = PBXGroup;
 			children = (
 				D21EB5972853806E00F27E32 /* SearchResaults.swift */,
 			);
-			path = Model;
+			path = GlobalModel;
 			sourceTree = "<group>";
 		};
 		D21EB57228537E9C00F27E32 = {
@@ -125,7 +125,7 @@
 				D2180B6228B86B2400D5CC9D /* Application */,
 				D2180B6328B86B4000D5CC9D /* SupportingFiles */,
 				D2180B7228BAF68200D5CC9D /* AssemblyLayer */,
-				D2180B7D28BB3D5B00D5CC9D /* Model */,
+				D2180B7D28BB3D5B00D5CC9D /* GlobalModel */,
 				D2180B6528BAF55300D5CC9D /* SearchModule */,
 			);
 			path = Music;

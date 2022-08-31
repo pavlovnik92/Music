@@ -21,7 +21,7 @@ final class SearchPresenter: SearchPresentationLogic {
         
         switch response {
             
-        case .presentMusic(let searchResponse):
+        case .presentMusic(searchResponse: let searchResponse):
             
             let cells = searchResponse?.results
             

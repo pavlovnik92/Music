@@ -12,7 +12,7 @@ final class SearchCell: UITableViewCell {
     //MARK: - Static properties
     static let identifier = "TableViewCell"
 
-    //MARK: - Private properties
+    //MARK: - Properties
      var albumImageView = UIImageView()
      let artistNameLabel = UILabel()
      let trackNameLabel = UILabel()
