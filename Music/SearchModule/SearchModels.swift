@@ -21,7 +21,7 @@ enum Models {
         struct Response {
             enum responseType {
                 case presentMusic(searchResponse: SearchResaults?)
-                case presentAlbumImage(image: UIImage?)
+                case presentAlbumImage(imageView: UIImageView?)
                 
             }
         }
@@ -29,7 +29,7 @@ enum Models {
         struct ViewModel {
             enum ViewModelType {
                 case displayMusic(music: [SongParameters]?)
-                case displayAlbumImage(image: UIImage?, searchText: String)
+                case displayAlbumImage(imageView: UIImageView?)
             }
         }
     }

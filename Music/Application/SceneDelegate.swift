@@ -19,8 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-
-        window?.rootViewController = AssemblyLayer.shared.createSearchModule()
+        
+//        let navigationController = UINavigationController(rootViewController: AssemblyLayer.createSearchModule())
+        
+        let nc = UINavigationController(rootViewController: AssemblyLayer.shared.createSearchModule())
+        
+        AssemblyLayer.shared.navigationController = nc
+        
+        window?.rootViewController = nc
         window?.makeKeyAndVisible()
     }
 

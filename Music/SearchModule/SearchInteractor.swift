@@ -9,7 +9,6 @@ import UIKit
 
 protocol SearchBisnessLigic: AnyObject {
     func makeRequest(request: Models.ModelType.Request.RequestType)
-    func requestAlbumImage(request: Models.ModelType.Request.RequestType)
 }
 
 
@@ -22,25 +21,20 @@ final class SearchInteractor: SearchBisnessLigic {
         
         switch request {
             
-        case .requestMusic(let searchText):
+        case .requestMusic(searchText: let searchText):
             service?.fetchMusic(request: searchText, completion: { [weak self] searchResaults in
                 
                 guard let searchResaults = searchResaults else { return }
                 
                 self?.presenter?.presentData(response: Models.ModelType.Response.responseType.presentMusic(searchResponse: searchResaults))
             })
-        }
-        
-    }
-    
-    func requestAlbumImage(request: Models.ModelType.Request.RequestType) {
-        
-        switch request {
             
-        case .requestMusic(searchText: let searchText):
-            <#code#>
         case .requestAlbumImage(URLString: let URLString):
-            <#code#>
+            let image = service?.fetchImage(URLString: URLString)
+            print("interactor", URLString)
+            print(image)
+            presenter?.presentData(response: Models.ModelType.Response.responseType.presentAlbumImage(imageView: image))
         }
+        
     }
 }
