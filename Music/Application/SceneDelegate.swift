@@ -19,8 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-
-        window?.rootViewController = AssemblyLayer.shared.createNavigationController()
+        
+        let navigationControler = UINavigationController(rootViewController: Music())
+        
+        window?.rootViewController = navigationControler
         window?.makeKeyAndVisible()
     }
 

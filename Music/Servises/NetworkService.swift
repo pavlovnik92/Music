@@ -1,24 +1,20 @@
 //
-//  SearchRequestWorker.swift
+//  NetworkService.swift
 //  Music
 //
-//  Created by Alice Romanova on 28.08.2022.
+//  Created by Alice Romanova on 10.06.2022.
 //
 
 import Foundation
 
-protocol SearchRequestLogic: AnyObject {
-    func createRequest(request: String?, completion: @escaping (Data?, Error?) -> Void)
-}
 
-
-final class SearchRequestWorker: SearchRequestLogic {
+final class NetworkService {
     
     func createRequest(request: String?, completion: @escaping (Data?, Error?) -> Void) {
         
         let parameters = prepareParameters(request: request)
         let url = setupURL(parameters: parameters)
-
+print(url)
         var request = URLRequest(url: url)
         
         request.httpMethod = "get"

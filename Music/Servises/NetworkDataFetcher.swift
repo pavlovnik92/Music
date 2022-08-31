@@ -1,54 +1,45 @@
 //
-//  SearchResponseWorker.swift
+//  NetworkDataFetcher.swift
 //  Music
 //
-//  Created by Alice Romanova on 28.08.2022.
+//  Created by Alice Romanova on 10.06.2022.
 //
 
+import Foundation
 import UIKit
 
-protocol SearchResponseLogic: AnyObject {
-    func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void)
-    func fetchImage(URLString: String?) -> UIImageView?
-}
 
-
-final class SearchResponseWorker: SearchResponseLogic {
+final class NetworkDataFetcher {
     
-    var requestWorker: SearchRequestLogic?
+    static let shared = NetworkDataFetcher()
     
-    
-    func fetchImage(URLString: String?) -> UIImageView? {
+    func fetchImage(imageView: UIImageView, URLString: String?) {
         
-        let imageView = UIImageView()
-
         if let URLString = URLString {
-            
             let URL = URL(string: URLString)
             let session = URLSession(configuration: .default)
-            
             let task = session.dataTask(with: URL!) { data, _, error in
                 guard let data = data, error == nil else { return }
-                
                 DispatchQueue.main.async {
                     imageView.image = UIImage(data: data)
                 }
             }
             task.resume()
         }
-        return imageView
     }
     
+    private var networkService = NetworkService()
+    
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void) {
-
-        requestWorker?.createRequest(request: request, completion: { data, error in
+        
+        networkService.createRequest(request: request) { data, error in
             if let error = error {
                 print("Error received requesting data: \(error.localizedDescription)")
                 completion(nil)
             }
             let decode = self.decodeJSON(type: SearchResaults.self, data: data)
             completion(decode)
-        })
+        }
     }
     
     private func decodeJSON<T: Decodable>(type: T.Type, data: Data?) -> T? {

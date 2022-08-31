@@ -7,17 +7,19 @@
 
 import UIKit
 
-final class SearchCell: UITableViewCell {
+final class MusicCell: UITableViewCell {
     
-    //MARK: - Static properties
+    //MARK: Static properties
     static let identifier = "TableViewCell"
 
-    //MARK: - Properties
-     var albumImageView = UIImageView()
+    //MARK: Private properties
+     let albumImageView = UIImageView()
      let artistNameLabel = UILabel()
      let trackNameLabel = UILabel()
 
-    //MARK: - LayoutSubviews
+    
+    
+    //MARK: LayoutSubviews
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -31,10 +33,10 @@ final class SearchCell: UITableViewCell {
         setupConstraintsForArtistNameLabel()
         
         createSeparatorLines()
+  
     }
     
     //MARK: - SetupAlbumImage
-    
     private func setupAlbumImage() {
         albumImageView.backgroundColor = .gray
         albumImageView.layer.cornerRadius = 3
@@ -52,7 +54,6 @@ final class SearchCell: UITableViewCell {
     }
     
     //MARK: - SetupTrackName
-    
     private func setupTrackName() {
         trackNameLabel.font = .systemFont(ofSize: 16, weight: .regular)
         trackNameLabel.textColor = .label
@@ -69,7 +70,6 @@ final class SearchCell: UITableViewCell {
     }
     
     //MARK: - SetupArtistNameLabel
-    
     private func setupArtistNameLabel() {
         artistNameLabel.textColor = .gray
         artistNameLabel.font = .systemFont(ofSize: 13, weight: .light)
@@ -86,9 +86,9 @@ final class SearchCell: UITableViewCell {
     }
     
     //MARK: - Separator lines
-    
     private func createSeparatorLines() {
 
+        // bottom
         let bottonSeparatorLine = UIView(frame: CGRect(x: 89, y: 59.5, width: 300, height: 0.26))
         bottonSeparatorLine.backgroundColor = .systemGray5
         
