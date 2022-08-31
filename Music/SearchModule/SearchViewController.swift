@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchDisplaylogic: AnyObject {
-    func displayData(data: Models.ModelType.ViewModel.ViewModelType)
+    func displayData(data: SearchModels.ModelType.ViewModel.ViewModelType)
 }
 
 
@@ -120,7 +120,7 @@ extension SearchViewController: UISearchBarDelegate {
         spinner.startAnimating()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
             
-            self?.interactor?.makeRequest(request: Models.ModelType.Request.RequestType.requestMusic(searchText: searchText))
+            self?.interactor?.makeRequest(request: SearchModels.ModelType.Request.RequestType.requestMusic(searchText: searchText))
         })
         
     }
@@ -143,7 +143,7 @@ extension SearchViewController: UITableViewDataSource {
         cell.trackNameLabel.text = track.trackName
         cell.artistNameLabel.text = track.artistName
         
-        interactor?.makeRequest(request: Models.ModelType.Request.RequestType.requestAlbumImage(URLString: track.artworkUrl100))
+        interactor?.makeRequest(request: SearchModels.ModelType.Request.RequestType.requestAlbumImage(URLString: track.artworkUrl100))
         
         cell.albumImageView = albumImageView
 
@@ -158,14 +158,16 @@ extension SearchViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 
 extension SearchViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        router?.pushViewController()
+    }
 }
 
 //MARK: - SearchDisplaylogic
 
 extension SearchViewController: SearchDisplaylogic {
     
-    func displayData(data: Models.ModelType.ViewModel.ViewModelType) {
+    func displayData(data: SearchModels.ModelType.ViewModel.ViewModelType) {
         
         spinner.stopAnimating()
         

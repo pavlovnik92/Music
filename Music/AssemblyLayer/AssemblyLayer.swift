@@ -12,39 +12,62 @@ class AssemblyLayer {
     static let shared = AssemblyLayer()
     
     
+    let searchRouter = SearchRouter()
+    let trackRouter = TrackRouter()
+    
+    let requestDataWorker = RequestDataWorker()
+    let fechedDataWorker = FechedDataWorker()
+    
+    
     func createNavigationController() -> UINavigationController {
         
         let navigationController = UINavigationController()
-        let router = SearchRouter()
         
-        router.navigationController = navigationController
-        navigationController.viewControllers = [createSearchModule(router: router)]
+        searchRouter.navigationController = navigationController
+        trackRouter.navigationController = navigationController
+        
+        fechedDataWorker.requestDataWorker = requestDataWorker
+        
+        navigationController.viewControllers = [createSearchModule()]
         
         return navigationController
     }
     
-    func createSearchModule(router: SearchRouter) -> UIViewController {
+    func createSearchModule() -> UIViewController {
         
         let interactor = SearchInteractor()
         let presenter = SearchPresenter()
-        
         let viewController = SearchViewController()
-        let requestWorker = SearchRequestWorker()
-        let responseWorker = SearchResponseWorker()
         
         //connections
-        
-        
         viewController.interactor = interactor
-        viewController.router = router
+        viewController.router = searchRouter
         
         interactor.presenter = presenter
-        interactor.service = responseWorker
+        interactor.service = fechedDataWorker
         
         presenter.view = viewController
-        
-        responseWorker.requestWorker = requestWorker
 
+        
+        return viewController
+    }
+    
+    func createTrackModule() -> UIViewController {
+        
+        let interactor = TrackInteractor()
+        let presenter = TrackPresenter()
+        let viewController = TrackViewController()
+        
+        //connections
+        viewController.interactor = interactor
+        viewController.router = trackRouter
+        
+        interactor.presenter = presenter
+        interactor.service = fechedDataWorker
+        
+        presenter.view = viewController
+
+        
         return viewController
     }
 }

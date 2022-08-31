@@ -1,5 +1,5 @@
 //
-//  SearchResponseWorker.swift
+//  FechedDataWorker.swift
 //  Music
 //
 //  Created by Alice Romanova on 28.08.2022.
@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol SearchResponseLogic: AnyObject {
+protocol FechedDataLogic: AnyObject {
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void)
     func fetchImage(URLString: String?) -> UIImageView?
 }
 
 
-final class SearchResponseWorker: SearchResponseLogic {
+final class FechedDataWorker: FechedDataLogic {
     
-    var requestWorker: SearchRequestLogic?
+    var requestDataWorker: RequestDataLogic?
     
     
     func fetchImage(URLString: String?) -> UIImageView? {
@@ -41,7 +41,7 @@ final class SearchResponseWorker: SearchResponseLogic {
     
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void) {
 
-        requestWorker?.createRequest(request: request, completion: { data, error in
+        requestDataWorker?.createRequest(request: request, completion: { data, error in
             if let error = error {
                 print("Error received requesting data: \(error.localizedDescription)")
                 completion(nil)

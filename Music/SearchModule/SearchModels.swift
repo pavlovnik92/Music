@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Models {
+enum SearchModels {
     
     enum ModelType {
         

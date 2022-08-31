@@ -8,17 +8,17 @@
 import Foundation
 
 protocol SearchBisnessLigic: AnyObject {
-    func makeRequest(request: Models.ModelType.Request.RequestType)
+    func makeRequest(request: SearchModels.ModelType.Request.RequestType)
 }
 
 
 final class SearchInteractor: SearchBisnessLigic {
     
-    var service: SearchResponseLogic?
+    var service: FechedDataLogic?
     var presenter: SearchPresentationLogic?
     
     
-    func makeRequest(request: Models.ModelType.Request.RequestType) {
+    func makeRequest(request: SearchModels.ModelType.Request.RequestType) {
         
         switch request {
             
@@ -27,14 +27,14 @@ final class SearchInteractor: SearchBisnessLigic {
             service?.fetchMusic(request: searchText, completion: { [weak self] searchResaults in
                 guard let searchResaults = searchResaults else { return }
                 
-                self?.presenter?.presentData(response: Models.ModelType.Response.responseType.presentMusic(searchResponse: searchResaults))
+                self?.presenter?.presentData(response: SearchModels.ModelType.Response.responseType.presentMusic(searchResponse: searchResaults))
             })
             
         case .requestAlbumImage(URLString: let URLString):
             
             let imageView = service?.fetchImage(URLString: URLString)
             
-            presenter?.presentData(response: Models.ModelType.Response.responseType.presentAlbumImage(imageView: imageView))
+            presenter?.presentData(response: SearchModels.ModelType.Response.responseType.presentAlbumImage(imageView: imageView))
         }
     }
 }

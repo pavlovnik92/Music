@@ -19,7 +19,7 @@ final class SearchRouter: SearchRoutingLogic {
     
     
     func pushViewController() {
-        
+        navigationController?.pushViewController(AssemblyLayer.shared.createTrackModule(), animated: true)
     }
     
     func popViewController() {

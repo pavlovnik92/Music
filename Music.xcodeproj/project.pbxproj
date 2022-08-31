@@ -10,28 +10,33 @@
 		D2180B6728BAF5C600D5CC9D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B6628BAF5C600D5CC9D /* SearchViewController.swift */; };
 		D2180B6928BAF5ED00D5CC9D /* SearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B6828BAF5ED00D5CC9D /* SearchInteractor.swift */; };
 		D2180B6B28BAF60E00D5CC9D /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B6A28BAF60E00D5CC9D /* SearchPresenter.swift */; };
-		D2180B6D28BAF61D00D5CC9D /* SearchRequestWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B6C28BAF61D00D5CC9D /* SearchRequestWorker.swift */; };
+		D2180B6D28BAF61D00D5CC9D /* RequestDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B6C28BAF61D00D5CC9D /* RequestDataWorker.swift */; };
 		D2180B6F28BAF62A00D5CC9D /* SearchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B6E28BAF62A00D5CC9D /* SearchModels.swift */; };
 		D2180B7128BAF64E00D5CC9D /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B7028BAF64E00D5CC9D /* SearchRouter.swift */; };
 		D2180B7428BAF69900D5CC9D /* AssemblyLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B7328BAF69900D5CC9D /* AssemblyLayer.swift */; };
-		D2180B7728BB1E5900D5CC9D /* SearchResponseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B7628BB1E5900D5CC9D /* SearchResponseWorker.swift */; };
+		D2180B7728BB1E5900D5CC9D /* FechedDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2180B7628BB1E5900D5CC9D /* FechedDataWorker.swift */; };
 		D21EB57F28537E9C00F27E32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21EB57E28537E9C00F27E32 /* AppDelegate.swift */; };
 		D21EB58128537E9C00F27E32 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21EB58028537E9C00F27E32 /* SceneDelegate.swift */; };
 		D21EB58828537E9C00F27E32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21EB58728537E9C00F27E32 /* Assets.xcassets */; };
 		D21EB58B28537E9C00F27E32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D21EB58928537E9C00F27E32 /* LaunchScreen.storyboard */; };
 		D21EB5982853806E00F27E32 /* SearchResaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21EB5972853806E00F27E32 /* SearchResaults.swift */; };
 		D21EB5A32853818700F27E32 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21EB5A22853818700F27E32 /* SearchCell.swift */; };
+		D2F0DD1E28C0034300BBC728 /* TrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0DD1D28C0034300BBC728 /* TrackViewController.swift */; };
+		D2F0DD2028C0035A00BBC728 /* TrackModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0DD1F28C0035A00BBC728 /* TrackModels.swift */; };
+		D2F0DD2228C0037600BBC728 /* TrackRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0DD2128C0037600BBC728 /* TrackRouter.swift */; };
+		D2F0DD2428C0039100BBC728 /* TrackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0DD2328C0039100BBC728 /* TrackInteractor.swift */; };
+		D2F0DD2628C0039D00BBC728 /* TrackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0DD2528C0039D00BBC728 /* TrackPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D2180B6628BAF5C600D5CC9D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		D2180B6828BAF5ED00D5CC9D /* SearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInteractor.swift; sourceTree = "<group>"; };
 		D2180B6A28BAF60E00D5CC9D /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
-		D2180B6C28BAF61D00D5CC9D /* SearchRequestWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequestWorker.swift; sourceTree = "<group>"; };
+		D2180B6C28BAF61D00D5CC9D /* RequestDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDataWorker.swift; sourceTree = "<group>"; };
 		D2180B6E28BAF62A00D5CC9D /* SearchModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModels.swift; sourceTree = "<group>"; };
 		D2180B7028BAF64E00D5CC9D /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
 		D2180B7328BAF69900D5CC9D /* AssemblyLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyLayer.swift; sourceTree = "<group>"; };
-		D2180B7628BB1E5900D5CC9D /* SearchResponseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponseWorker.swift; sourceTree = "<group>"; };
+		D2180B7628BB1E5900D5CC9D /* FechedDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechedDataWorker.swift; sourceTree = "<group>"; };
 		D21EB57B28537E9C00F27E32 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21EB57E28537E9C00F27E32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D21EB58028537E9C00F27E32 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +45,11 @@
 		D21EB58C28537E9C00F27E32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D21EB5972853806E00F27E32 /* SearchResaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResaults.swift; sourceTree = "<group>"; };
 		D21EB5A22853818700F27E32 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		D2F0DD1D28C0034300BBC728 /* TrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackViewController.swift; sourceTree = "<group>"; };
+		D2F0DD1F28C0035A00BBC728 /* TrackModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackModels.swift; sourceTree = "<group>"; };
+		D2F0DD2128C0037600BBC728 /* TrackRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRouter.swift; sourceTree = "<group>"; };
+		D2F0DD2328C0039100BBC728 /* TrackInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackInteractor.swift; sourceTree = "<group>"; };
+		D2F0DD2528C0039D00BBC728 /* TrackPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				D2180B6E28BAF62A00D5CC9D /* SearchModels.swift */,
-				D2180B6C28BAF61D00D5CC9D /* SearchRequestWorker.swift */,
-				D2180B7628BB1E5900D5CC9D /* SearchResponseWorker.swift */,
 				D2180B6828BAF5ED00D5CC9D /* SearchInteractor.swift */,
 				D2180B6A28BAF60E00D5CC9D /* SearchPresenter.swift */,
 				D2180B6628BAF5C600D5CC9D /* SearchViewController.swift */,
@@ -126,9 +134,32 @@
 				D2180B6328B86B4000D5CC9D /* SupportingFiles */,
 				D2180B7228BAF68200D5CC9D /* AssemblyLayer */,
 				D2180B7D28BB3D5B00D5CC9D /* GlobalModel */,
+				D2F0DD2928C00A9E00BBC728 /* GlobalWorkers */,
 				D2180B6528BAF55300D5CC9D /* SearchModule */,
+				D2F0DD1C28C002FE00BBC728 /* TrackModule */,
 			);
 			path = Music;
+			sourceTree = "<group>";
+		};
+		D2F0DD1C28C002FE00BBC728 /* TrackModule */ = {
+			isa = PBXGroup;
+			children = (
+				D2F0DD1F28C0035A00BBC728 /* TrackModels.swift */,
+				D2F0DD2328C0039100BBC728 /* TrackInteractor.swift */,
+				D2F0DD2528C0039D00BBC728 /* TrackPresenter.swift */,
+				D2F0DD1D28C0034300BBC728 /* TrackViewController.swift */,
+				D2F0DD2128C0037600BBC728 /* TrackRouter.swift */,
+			);
+			path = TrackModule;
+			sourceTree = "<group>";
+		};
+		D2F0DD2928C00A9E00BBC728 /* GlobalWorkers */ = {
+			isa = PBXGroup;
+			children = (
+				D2180B6C28BAF61D00D5CC9D /* RequestDataWorker.swift */,
+				D2180B7628BB1E5900D5CC9D /* FechedDataWorker.swift */,
+			);
+			path = GlobalWorkers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,15 +232,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2F0DD2428C0039100BBC728 /* TrackInteractor.swift in Sources */,
 				D2180B6B28BAF60E00D5CC9D /* SearchPresenter.swift in Sources */,
-				D2180B7728BB1E5900D5CC9D /* SearchResponseWorker.swift in Sources */,
+				D2180B7728BB1E5900D5CC9D /* FechedDataWorker.swift in Sources */,
 				D2180B6728BAF5C600D5CC9D /* SearchViewController.swift in Sources */,
+				D2F0DD2628C0039D00BBC728 /* TrackPresenter.swift in Sources */,
 				D2180B6928BAF5ED00D5CC9D /* SearchInteractor.swift in Sources */,
 				D21EB5982853806E00F27E32 /* SearchResaults.swift in Sources */,
 				D21EB5A32853818700F27E32 /* SearchCell.swift in Sources */,
-				D2180B6D28BAF61D00D5CC9D /* SearchRequestWorker.swift in Sources */,
+				D2180B6D28BAF61D00D5CC9D /* RequestDataWorker.swift in Sources */,
+				D2F0DD2228C0037600BBC728 /* TrackRouter.swift in Sources */,
 				D21EB57F28537E9C00F27E32 /* AppDelegate.swift in Sources */,
 				D21EB58128537E9C00F27E32 /* SceneDelegate.swift in Sources */,
+				D2F0DD2028C0035A00BBC728 /* TrackModels.swift in Sources */,
+				D2F0DD1E28C0034300BBC728 /* TrackViewController.swift in Sources */,
 				D2180B7428BAF69900D5CC9D /* AssemblyLayer.swift in Sources */,
 				D2180B6F28BAF62A00D5CC9D /* SearchModels.swift in Sources */,
 				D2180B7128BAF64E00D5CC9D /* SearchRouter.swift in Sources */,

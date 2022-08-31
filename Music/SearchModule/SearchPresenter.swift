@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchPresentationLogic: AnyObject {
-    func presentData(response: Models.ModelType.Response.responseType)
+    func presentData(response: SearchModels.ModelType.Response.responseType)
 }
 
 
@@ -17,7 +17,7 @@ final class SearchPresenter: SearchPresentationLogic {
     weak var view: SearchDisplaylogic?
     
     
-    func presentData(response: Models.ModelType.Response.responseType) {
+    func presentData(response: SearchModels.ModelType.Response.responseType) {
         
         switch response {
             
@@ -25,11 +25,11 @@ final class SearchPresenter: SearchPresentationLogic {
             
             let cells = searchResponse?.results
             
-            view?.displayData(data: Models.ModelType.ViewModel.ViewModelType.displayMusic(music: cells))
+            view?.displayData(data: SearchModels.ModelType.ViewModel.ViewModelType.displayMusic(music: cells))
             
         case .presentAlbumImage(imageView: let imageView):
             
-            view?.displayData(data: Models.ModelType.ViewModel.ViewModelType.displayAlbumImage(imageView: imageView))
+            view?.displayData(data: SearchModels.ModelType.ViewModel.ViewModelType.displayAlbumImage(imageView: imageView))
         }
     }
 }
