@@ -10,13 +10,13 @@ import Foundation
 
 struct SearchResaults: Decodable {
     
-    var resultCount: Int
-    var results: [SongParameters]
+    let resultCount: Int
+    let results: [SongParameters]
 }
 
 struct SongParameters: Decodable {
     
-    var artistName: String?
-    var trackName: String?
-    var artworkUrl100: String?
+    let artistName: String?
+    let trackName: String?
+    let artworkUrl100: String?
 }
