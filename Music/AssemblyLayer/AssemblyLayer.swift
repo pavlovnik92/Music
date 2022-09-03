@@ -18,6 +18,10 @@ class AssemblyLayer {
     let requestDataWorker = RequestDataWorker()
     let fechedDataWorker = FechedDataWorker()
     
+    let trackInteractor = TrackInteractor()
+    let searchInteractor = SearchInteractor()
+    
+    
     
     func createNavigationController() -> UINavigationController {
         
@@ -35,16 +39,17 @@ class AssemblyLayer {
     
     func createSearchModule() -> UIViewController {
         
-        let interactor = SearchInteractor()
+
         let presenter = SearchPresenter()
         let viewController = SearchViewController()
         
         //connections
-        viewController.interactor = interactor
+        viewController.interactor = searchInteractor
         viewController.router = searchRouter
         
-        interactor.presenter = presenter
-        interactor.service = fechedDataWorker
+        searchInteractor.presenter = presenter
+        searchInteractor.service = fechedDataWorker
+        searchInteractor.trackInteractor = trackInteractor
         
         presenter.view = viewController
 
@@ -54,16 +59,16 @@ class AssemblyLayer {
     
     func createTrackModule() -> UIViewController {
         
-        let interactor = TrackInteractor()
         let presenter = TrackPresenter()
         let viewController = TrackViewController()
         
         //connections
-        viewController.interactor = interactor
+        viewController.interactor = trackInteractor
         viewController.router = trackRouter
         
-        interactor.presenter = presenter
-        interactor.service = fechedDataWorker
+        trackInteractor.presenter = presenter
+        trackInteractor.service = fechedDataWorker
+        trackInteractor.searchInteractor = searchInteractor
         
         presenter.view = viewController
 

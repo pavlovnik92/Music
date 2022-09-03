@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import AVFoundation
+import MediaPlayer
 
 protocol TrackDiasplayLogic: AnyObject {
     func displayData(data: TrackModels.ModelType.ViewModel.ViewModelType)
@@ -13,6 +15,11 @@ protocol TrackDiasplayLogic: AnyObject {
  
 
 final class TrackViewController: UIViewController {
+    
+    var name = ""
+    var arname = ""
+    var song = ""
+    var photo = ""
     
     var interactor: TrackBisnessLogic?
     var router: TrackRoutingLogic?
@@ -34,6 +41,8 @@ final class TrackViewController: UIViewController {
     private let pauseButton = UIButton()
     private let forwardButton = UIButton()
     private let addingButton = UIButton()
+    
+    private let player = AVPlayer()
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -78,6 +87,7 @@ final class TrackViewController: UIViewController {
     private func setupAlbumImageView() {
         albumImageView.backgroundColor = .red
         albumImageView.layer.cornerRadius = 10
+    
     }
     
     private func setupConstraintsForAlbumImageView() {
@@ -94,7 +104,9 @@ final class TrackViewController: UIViewController {
     //MARK: - setupTrackNameLabel
     
     private func setupTrackNameLabel() {
-        trackNameLabel.backgroundColor = .blue
+        trackNameLabel.backgroundColor = .clear
+        trackNameLabel.text = name
+        
     }
     
     private func setupConstraintsForTrackNameLabel() {
@@ -111,7 +123,8 @@ final class TrackViewController: UIViewController {
     //MARK: - setupArtistNameLabel
     
     private func setupArtistNameLabel() {
-        artistNameLabel.backgroundColor = .brown
+        artistNameLabel.backgroundColor = .clear
+        artistNameLabel.text = arname
     }
     
     private func setupConstraintsForArtistNameLabel() {
@@ -289,6 +302,13 @@ final class TrackViewController: UIViewController {
 extension TrackViewController: TrackDiasplayLogic {
     
     func displayData(data: TrackModels.ModelType.ViewModel.ViewModelType) {
-        
+        switch data {
+            
+        case .displaySongParameters(name: let name, artistName: let artistName, icon: let icon, song: let song):
+            self.song = song
+            self.name = name
+            self.arname = artistName
+            self.photo = icon!
+        }
     }
 }

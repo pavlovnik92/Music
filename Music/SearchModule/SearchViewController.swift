@@ -160,6 +160,9 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.pushViewController()
+        interactor?.makeRequest(request: SearchModels.ModelType.Request.RequestType.giveCurrentIndexPath(indexPath: indexPath,
+                                                                                                         musicArray: musicArray))
+
     }
 }
 

@@ -15,6 +15,7 @@ enum SearchModels {
             enum RequestType {
                 case requestMusic(searchText: String)
                 case requestAlbumImage(URLString: String?)
+                case giveCurrentIndexPath(indexPath: IndexPath, musicArray: [SongParameters])
             }
         }
         

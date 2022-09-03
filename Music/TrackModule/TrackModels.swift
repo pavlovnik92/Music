@@ -13,20 +13,21 @@ enum TrackModels {
         
         struct Request {
             enum RequestType {
-                case some
+                case giveSongParameters(name: String, artistName: String, icon: String?, song: String)
+                
             }
         }
         
         struct Response {
             enum responseType {
-                case some
+                case presentSongParameters(name: String, artistName: String, icon: String?, song: String)
                 
             }
         }
         
         struct ViewModel {
             enum ViewModelType {
-                case some
+                case displaySongParameters(name: String, artistName: String, icon: String?, song: String)
             }
         }
     }
