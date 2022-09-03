@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TrackBisnessLogic: AnyObject {
-    
+    func makeRequest(request: TrackModels.ModelType.Request.RequestType)
 }
 
 
@@ -16,4 +16,9 @@ final class TrackInteractor: TrackBisnessLogic {
     
     var presenter: TrackPresentationLogic?
     var service: FechedDataLogic?
+    
+    
+    func makeRequest(request: TrackModels.ModelType.Request.RequestType) {
+    
+    }
 }
