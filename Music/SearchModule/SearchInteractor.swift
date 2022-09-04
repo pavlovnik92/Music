@@ -42,6 +42,7 @@ final class SearchInteractor: SearchBisnessLigic {
             let albumImage = musicArray[indexPath.row].artworkUrl100
             let duration = musicArray[indexPath.row].previewUrl
             
+
             trackInteractor?.makeRequest(request: TrackModels.ModelType.Request.RequestType.giveSongParameters(name: trackName,
                                                                                                                artistName: artistName,
                                                                                                                icon: albumImage,

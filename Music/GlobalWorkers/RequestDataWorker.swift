@@ -18,7 +18,7 @@ final class RequestDataWorker: RequestDataLogic {
         
         let parameters = prepareParameters(request: request)
         let url = setupURL(parameters: parameters)
-print(url)
+
         var request = URLRequest(url: url)
         
         request.httpMethod = "get"

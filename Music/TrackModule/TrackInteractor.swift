@@ -23,10 +23,13 @@ final class TrackInteractor: TrackBisnessLogic {
             
         case .giveSongParameters(name: let name, artistName: let artistName, icon: let icon, song: let song):
             
+            let imageView = service?.fetchImage(URLString: icon)
+            
             presenter?.presentData(response: TrackModels.ModelType.Response.responseType.presentSongParameters(name: name,
                                                                                                                artistName: artistName,
-                                                                                                               icon: icon,
+                                                                                                               icon: imageView,
                                                                                                                song: song))
         }
     }
 }
+

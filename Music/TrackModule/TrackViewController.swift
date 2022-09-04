@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AVFoundation
 import MediaPlayer
 
 protocol TrackDiasplayLogic: AnyObject {
@@ -15,16 +14,13 @@ protocol TrackDiasplayLogic: AnyObject {
  
 
 final class TrackViewController: UIViewController {
-    
-    var name = ""
-    var arname = ""
-    var song = ""
-    var photo = ""
-    
+
     var interactor: TrackBisnessLogic?
     var router: TrackRoutingLogic?
-
+    
     //MARK: - Properties
+    private let player = AVPlayer()
+    
     private let albumImageView = UIImageView()
     
     private let trackNameLabel = UILabel()
@@ -41,52 +37,71 @@ final class TrackViewController: UIViewController {
     private let pauseButton = UIButton()
     private let forwardButton = UIButton()
     private let addingButton = UIButton()
-    
-    private let player = AVPlayer()
+     
+    //MARK: - Track components
+    private var currentTrack: String!
+    private var currentAlbumImageView: UIImageView?
+    private var currentTrackName: String!
+    private var currentArtistName: String!
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
-        navigationItem.hidesBackButton = true
+//        navigationItem.hidesBackButton = true
 
         setupAlbumImageView()
         setupConstraintsForAlbumImageView()
-        
+
         setupTrackNameLabel()
         setupConstraintsForTrackNameLabel()
-        
+
         setupArtistNameLabel()
         setupConstraintsForArtistNameLabel()
-        
+
         setupTrackSlider()
         setupConstraintsForTrackSlider()
-        
+
         setupTimeLabel()
         setupConstraintsForTimeLabel()
-        
+
         setupBackButton()
         setupConstraintsForBackButton()
-        
+
         setupPauseButton()
         setupConstraintsForPauseButton()
-        
+
         setupForwardButton()
         setupConstraintsForForwardButton()
-        
+
         setupVolumeSlider()
         setupConstraintsForVolumeSlider()
+
+
+   
+    }
+    
+    override func loadView() {
+        super.loadView()
+        player.automaticallyWaitsToMinimizeStalling = false
         
-        setupVolumeImages()
-        setupConstraintsForVolumeImages()
+        guard let track = URL(string: currentTrack) else { return }
+        
+        let item = AVPlayerItem(url: track)
+        player.replaceCurrentItem(with: item)
+        player.play()
     }
     
     //MARK: - setupAlbumImageView
     
     private func setupAlbumImageView() {
-        albumImageView.backgroundColor = .red
-        albumImageView.layer.cornerRadius = 10
+        
+        guard let currentAlbumImageView = currentAlbumImageView else { return }
+        
+        self.albumImageView.backgroundColor = .gray
+        self.albumImageView.image = currentAlbumImageView.image
+        self.albumImageView.layer.cornerRadius = 10
     
     }
     
@@ -96,8 +111,8 @@ final class TrackViewController: UIViewController {
         view.addSubview(albumImageView)
         
         albumImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 87).isActive = true
-        albumImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        albumImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+        albumImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 23).isActive = true
+        albumImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -23).isActive = true
         albumImageView.heightAnchor.constraint(equalToConstant: 325).isActive = true
     }
     
@@ -105,8 +120,9 @@ final class TrackViewController: UIViewController {
     
     private func setupTrackNameLabel() {
         trackNameLabel.backgroundColor = .clear
-        trackNameLabel.text = name
-        
+        trackNameLabel.text = currentTrackName
+        trackNameLabel.font = .systemFont(ofSize: 25, weight: .bold)
+        trackNameLabel.textAlignment = .center
     }
     
     private func setupConstraintsForTrackNameLabel() {
@@ -115,16 +131,19 @@ final class TrackViewController: UIViewController {
         view.addSubview(trackNameLabel)
         
         trackNameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 50).isActive = true
-        trackNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        trackNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -100).isActive = true
-        trackNameLabel.heightAnchor.constraint(equalToConstant: 17).isActive = true
+        trackNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        trackNameLabel.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        trackNameLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
     }
     
     //MARK: - setupArtistNameLabel
     
     private func setupArtistNameLabel() {
         artistNameLabel.backgroundColor = .clear
-        artistNameLabel.text = arname
+        artistNameLabel.text = currentArtistName
+        artistNameLabel.font = .systemFont(ofSize: 25, weight: .medium)
+        artistNameLabel.alpha = 0.4
+        artistNameLabel.textAlignment = .center
     }
     
     private func setupConstraintsForArtistNameLabel() {
@@ -132,16 +151,16 @@ final class TrackViewController: UIViewController {
         
         view.addSubview(artistNameLabel)
         
-        artistNameLabel.topAnchor.constraint(equalTo: trackNameLabel.bottomAnchor, constant: 8).isActive = true
-        artistNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        artistNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -100).isActive = true
-        artistNameLabel.heightAnchor.constraint(equalToConstant: 17).isActive = true
+        artistNameLabel.topAnchor.constraint(equalTo: trackNameLabel.bottomAnchor, constant: 5).isActive = true
+        artistNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        artistNameLabel.widthAnchor.constraint(equalTo: trackNameLabel.widthAnchor).isActive = true
+        artistNameLabel.heightAnchor.constraint(equalTo: trackNameLabel.heightAnchor).isActive = true
     }
     
     //MARK: - setupTrackSlider
     
     private func setupTrackSlider() {
-        trackSlider.backgroundColor = .cyan
+
     }
     
     private func setupConstraintsForTrackSlider() {
@@ -152,7 +171,7 @@ final class TrackViewController: UIViewController {
         trackSlider.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: 30).isActive = true
         trackSlider.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         trackSlider.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        trackSlider.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        trackSlider.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
     //MARK: - setupTimeLabel
@@ -245,7 +264,8 @@ final class TrackViewController: UIViewController {
     //MARK: - setupVolumeSlider
     
     private func setupVolumeSlider() {
-        volumeSlider.backgroundColor = .green
+        volumeSlider.maximumValueImage = UIImage(named: "max")
+        volumeSlider.minimumValueImage = UIImage(named: "min")
     }
     
     private func setupConstraintsForVolumeSlider() {
@@ -254,43 +274,23 @@ final class TrackViewController: UIViewController {
         view.addSubview(volumeSlider)
         
         volumeSlider.topAnchor.constraint(equalTo: pauseButton.bottomAnchor, constant: 50).isActive = true
-        volumeSlider.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 60).isActive = true
-        volumeSlider.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -60).isActive = true
-        volumeSlider.heightAnchor.constraint(equalToConstant: 2).isActive = true
-    }
-    
-    //MARK: - setupVolumeImages
-    
-    private func setupVolumeImages() {
-        maxVolumeImageView.image = UIImage(named: "max")!
-        minVolumeImageView.image = UIImage(named: "min")!
-    }
-    
-    private func setupConstraintsForVolumeImages() {
-        maxVolumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        minVolumeImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(maxVolumeImageView)
-        view.addSubview(minVolumeImageView)
-        
-        maxVolumeImageView.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        maxVolumeImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
-        maxVolumeImageView.leftAnchor.constraint(equalTo: volumeSlider.rightAnchor, constant: 20).isActive = true
-        maxVolumeImageView.bottomAnchor.constraint(equalTo: volumeSlider.bottomAnchor, constant: 7).isActive = true
-        
-        minVolumeImageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
-        minVolumeImageView.widthAnchor.constraint(equalToConstant: 12).isActive = true
-        minVolumeImageView.rightAnchor.constraint(equalTo: volumeSlider.leftAnchor, constant: -20).isActive = true
-        minVolumeImageView.bottomAnchor.constraint(equalTo: volumeSlider.bottomAnchor, constant: 6).isActive = true
+        volumeSlider.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true
+        volumeSlider.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -50).isActive = true
     }
     
     
     
     
     @objc private func stop() {
-        
+
+        if player.timeControlStatus == .playing {
+            player.pause()
+            pauseButton.setImage(UIImage(named: "play"), for: .normal)
+        } else {
+            player.play()
+            pauseButton.setImage(UIImage(named: "pause"), for: .normal)
+        }
     }
-    
 }
 
 
@@ -305,10 +305,13 @@ extension TrackViewController: TrackDiasplayLogic {
         switch data {
             
         case .displaySongParameters(name: let name, artistName: let artistName, icon: let icon, song: let song):
-            self.song = song
-            self.name = name
-            self.arname = artistName
-            self.photo = icon!
+            
+            currentTrack = song
+            currentAlbumImageView = icon
+            currentTrackName = name
+            currentArtistName = artistName
+            
+          
         }
     }
 }
