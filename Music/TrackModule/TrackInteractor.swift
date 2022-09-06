@@ -20,15 +20,13 @@ final class TrackInteractor: TrackBisnessLogic {
     
     func makeRequest(request: TrackModels.ModelType.Request.RequestType) {
         switch request {
+
+        case .giveSongParameters(name: let name, artistName: let artistName, albumImage: let albumImage, track: let track):
+            guard let albumImage = albumImage else { return }
+         
+            let imageView = service?.fetchImage(URLString: albumImage)
             
-        case .giveSongParameters(name: let name, artistName: let artistName, icon: let icon, song: let song):
-            
-            let imageView = service?.fetchImage(URLString: icon)
-            
-            presenter?.presentData(response: TrackModels.ModelType.Response.responseType.presentSongParameters(name: name,
-                                                                                                               artistName: artistName,
-                                                                                                               icon: imageView,
-                                                                                                               song: song))
+            presenter?.presentData(response: TrackModels.ModelType.Response.responseType.presentSongParameters(name: name, artistName: artistName, imageView: imageView, track: track))
         }
     }
 }

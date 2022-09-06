@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol FechedDataLogic: AnyObject {
     func fetchMusic(request: String?, completion: @escaping (SearchResaults?) -> Void)
-    func fetchImage(URLString: String?) -> UIImageView?
+    func fetchImage(URLString: String) -> UIImageView?
 }
 
 
@@ -18,24 +19,13 @@ final class FechedDataWorker: FechedDataLogic {
     var requestDataWorker: RequestDataLogic?
     
     
-    func fetchImage(URLString: String?) -> UIImageView? {
-        
+    func fetchImage(URLString: String) -> UIImageView? {
+        let new = URLString.replacingOccurrences(of: "100x100", with: "500x500")
         let imageView = UIImageView()
-
-        if let URLString = URLString {
-            
-            let URL = URL(string: URLString)
-            let session = URLSession(configuration: .default)
-            
-            let task = session.dataTask(with: URL!) { data, _, error in
-                guard let data = data, error == nil else { return }
-                
-                DispatchQueue.main.async {
-                    imageView.image = UIImage(data: data)
-                }
-            }
-            task.resume()
-        }
+        let url = URL(string: new)
+       
+        imageView.sd_setImage(with: url)
+        
         return imageView
     }
     

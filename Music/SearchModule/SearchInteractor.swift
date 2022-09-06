@@ -30,23 +30,23 @@ final class SearchInteractor: SearchBisnessLigic {
             })
             
         case .requestAlbumImage(URLString: let URLString):
+            guard let URLString = URLString else { return }
             
             let imageView = service?.fetchImage(URLString: URLString)
             
             presenter?.presentData(response: SearchModels.ModelType.Response.responseType.presentAlbumImage(imageView: imageView))
 
-        case .giveCurrentIndexPath(indexPath: let indexPath, musicArray: let musicArray):
+        case .giveCurrentTrack(indexPath: let indexPath, musicArray: let musicArray):
             
             let trackName = musicArray[indexPath.row].trackName
             let artistName = musicArray[indexPath.row].artistName
             let albumImage = musicArray[indexPath.row].artworkUrl100
             let duration = musicArray[indexPath.row].previewUrl
             
-
-            trackInteractor?.makeRequest(request: TrackModels.ModelType.Request.RequestType.giveSongParameters(name: trackName,
-                                                                                                               artistName: artistName,
-                                                                                                               icon: albumImage,
-                                                                                                               song: duration))
+        trackInteractor?.makeRequest(request: TrackModels.ModelType.Request.RequestType.giveSongParameters(name: trackName,
+                                                                                                           artistName: artistName,
+                                                                                                           albumImage: albumImage,
+                                                                                                           track: duration))
         }
     }
 }

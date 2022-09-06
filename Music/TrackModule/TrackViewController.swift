@@ -99,10 +99,11 @@ final class TrackViewController: UIViewController {
         
         guard let currentAlbumImageView = currentAlbumImageView else { return }
         
-        self.albumImageView.backgroundColor = .gray
-        self.albumImageView.image = currentAlbumImageView.image
-        self.albumImageView.layer.cornerRadius = 10
-    
+        albumImageView.backgroundColor = .gray
+        albumImageView.image = currentAlbumImageView.image
+        albumImageView.clipsToBounds = true
+        albumImageView.layer.cornerRadius = 10
+        
     }
     
     private func setupConstraintsForAlbumImageView() {
@@ -304,14 +305,12 @@ extension TrackViewController: TrackDiasplayLogic {
     func displayData(data: TrackModels.ModelType.ViewModel.ViewModelType) {
         switch data {
             
-        case .displaySongParameters(name: let name, artistName: let artistName, icon: let icon, song: let song):
+        case .displaySongParameters(name: let name, artistName: let artistName, imageView: let imageView, track: let track):
             
-            currentTrack = song
-            currentAlbumImageView = icon
+            currentTrack = track
+            currentAlbumImageView = imageView
             currentTrackName = name
             currentArtistName = artistName
-            
-          
         }
     }
 }

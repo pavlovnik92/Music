@@ -20,12 +20,12 @@ final class TrackPresenter: TrackPresentationLogic {
     func presentData(response: TrackModels.ModelType.Response.responseType) {
         switch response {
             
-        case .presentSongParameters(name: let name, artistName: let artistName, icon: let icon, song: let song):
+        case .presentSongParameters(name: let name, artistName: let artistName, imageView: let imageView, track: let track):
             
             view?.displayData(data: TrackModels.ModelType.ViewModel.ViewModelType.displaySongParameters(name: name,
                                                                                                         artistName: artistName,
-                                                                                                        icon: icon,
-                                                                                                        song: song))
+                                                                                                        imageView: imageView,
+                                                                                                        track: track))
         }
     }
 }
