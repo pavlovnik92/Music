@@ -90,6 +90,15 @@ final class TrackViewController: UIViewController {
         
         let item = AVPlayerItem(url: track)
         player.replaceCurrentItem(with: item)
+        
+        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1000), queue: DispatchQueue.main) { [weak self] time in
+            if time.seconds < 10 {
+                self?.timeLabel.text = "00:0\(NSString(format: "%.0f", time.seconds))"
+            } else {
+                self?.timeLabel.text = "00:\(NSString(format: "%.0f", time.seconds))"
+            }
+            self?.trackSlider.value = Float(time.seconds)
+        }
         player.play()
     }
     
@@ -122,7 +131,7 @@ final class TrackViewController: UIViewController {
     private func setupTrackNameLabel() {
         trackNameLabel.backgroundColor = .clear
         trackNameLabel.text = currentTrackName
-        trackNameLabel.font = .systemFont(ofSize: 25, weight: .bold)
+        trackNameLabel.font = .systemFont(ofSize: 25, weight: .medium)
         trackNameLabel.textAlignment = .center
     }
     
@@ -131,9 +140,9 @@ final class TrackViewController: UIViewController {
         
         view.addSubview(trackNameLabel)
         
-        trackNameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 50).isActive = true
+        trackNameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 40).isActive = true
         trackNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        trackNameLabel.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        trackNameLabel.widthAnchor.constraint(equalToConstant: 340).isActive = true
         trackNameLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
     }
     
@@ -142,8 +151,8 @@ final class TrackViewController: UIViewController {
     private func setupArtistNameLabel() {
         artistNameLabel.backgroundColor = .clear
         artistNameLabel.text = currentArtistName
-        artistNameLabel.font = .systemFont(ofSize: 25, weight: .medium)
-        artistNameLabel.alpha = 0.4
+        artistNameLabel.font = .systemFont(ofSize: 25, weight: .light)
+        artistNameLabel.alpha = 0.5
         artistNameLabel.textAlignment = .center
     }
     
@@ -161,7 +170,7 @@ final class TrackViewController: UIViewController {
     //MARK: - setupTrackSlider
     
     private func setupTrackSlider() {
-
+        trackSlider.maximumValue = Float(player.currentItem?.asset.duration.seconds ?? 0)
     }
     
     private func setupConstraintsForTrackSlider() {
@@ -178,7 +187,9 @@ final class TrackViewController: UIViewController {
     //MARK: - setupTimeLabel
     
     private func setupTimeLabel() {
-        timeLabel.backgroundColor = .green
+        timeLabel.text = "00:00"
+        timeLabel.font = .systemFont(ofSize: 15, weight: .light)
+        timeLabel.alpha = 0.5
     }
     
     private func setupConstraintsForTimeLabel() {
@@ -186,9 +197,9 @@ final class TrackViewController: UIViewController {
         
         view.addSubview(timeLabel)
         
-        timeLabel.topAnchor.constraint(equalTo: trackSlider.bottomAnchor, constant: 15).isActive = true
-        timeLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        timeLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: trackSlider.bottomAnchor, constant: 17).isActive = true
+        timeLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 23).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
         timeLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
     }
     
