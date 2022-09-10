@@ -46,7 +46,7 @@ final class SearchCell: UITableViewCell {
         albumImageView.translatesAutoresizingMaskIntoConstraints = false
         
         albumImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
-        albumImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
+        albumImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
         albumImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         albumImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
@@ -65,7 +65,7 @@ final class SearchCell: UITableViewCell {
         trackNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 11).isActive = true
         trackNameLabel.leftAnchor.constraint(equalTo: albumImageView.rightAnchor, constant: 18).isActive = true
         trackNameLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        trackNameLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        trackNameLabel.widthAnchor.constraint(equalToConstant: 250).isActive = true
     }
     
     //MARK: - SetupArtistNameLabel

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MediaPlayer
+import AVKit
 
 protocol TrackDiasplayLogic: AnyObject {
     func displayData(data: TrackModels.ModelType.ViewModel.ViewModelType)
@@ -47,9 +47,11 @@ final class TrackViewController: UIViewController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .systemBackground
 //        navigationItem.hidesBackButton = true
+        
+        setupPlayer()
 
         setupAlbumImageView()
         setupConstraintsForAlbumImageView()
@@ -77,21 +79,43 @@ final class TrackViewController: UIViewController {
 
         setupVolumeSlider()
         setupConstraintsForVolumeSlider()
-
-
-   
     }
     
-    override func loadView() {
-        super.loadView()
+    //MARK: - Animations
+    
+    private func setPauseAnimation() {
+        UIView.animate(withDuration: 0.7,
+                       delay: 0,
+                       usingSpringWithDamping: 1,
+                       initialSpringVelocity: 1,
+                       options: .curveLinear) {
+            self.albumImageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        } completion: { _ in
+      }
+    }
+    
+    private func setPlayAnimation() {
+        UIView.animate(withDuration: 0.7,
+                       delay: 0,
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 1,
+                       options: .curveLinear) {
+            self.albumImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+        } completion: { _ in
+      }
+    }
+    
+    //MARK: - setupPlayer
+    
+    private func setupPlayer() {
         player.automaticallyWaitsToMinimizeStalling = false
+        let url = URL(string: currentTrack)
         
-        guard let track = URL(string: currentTrack) else { return }
-        
-        let item = AVPlayerItem(url: track)
+        let item = AVPlayerItem(url: url!)
         player.replaceCurrentItem(with: item)
+        player.play()
         
-        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1000), queue: DispatchQueue.main) { [weak self] time in
+        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1000), queue: .main) { [weak self] time in
             if time.seconds < 10 {
                 self?.timeLabel.text = "00:0\(NSString(format: "%.0f", time.seconds))"
             } else {
@@ -99,7 +123,6 @@ final class TrackViewController: UIViewController {
             }
             self?.trackSlider.value = Float(time.seconds)
         }
-        player.play()
     }
     
     //MARK: - setupAlbumImageView
@@ -170,7 +193,9 @@ final class TrackViewController: UIViewController {
     //MARK: - setupTrackSlider
     
     private func setupTrackSlider() {
-        trackSlider.maximumValue = Float(player.currentItem?.asset.duration.seconds ?? 0)
+        trackSlider.maximumValue = Float(player.currentItem?.asset.duration.seconds ?? 30)
+        
+        trackSlider.addTarget(self, action: #selector(rearrange), for: .valueChanged)
     }
     
     private func setupConstraintsForTrackSlider() {
@@ -290,19 +315,23 @@ final class TrackViewController: UIViewController {
         volumeSlider.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -50).isActive = true
     }
     
-    
-    
-    
     @objc private func stop() {
-
-        if player.timeControlStatus == .playing {
-            player.pause()
-            pauseButton.setImage(UIImage(named: "play"), for: .normal)
-        } else {
+        if player.timeControlStatus == .paused {
+            setPauseAnimation()
             player.play()
             pauseButton.setImage(UIImage(named: "pause"), for: .normal)
+        } else {
+            player.pause()
+            setPlayAnimation()
+            pauseButton.setImage(UIImage(named: "play"), for: .normal)
         }
     }
+    
+    @objc private func rearrange() {
+   
+        player.seek(to: CMTime(seconds: Double(trackSlider.value), preferredTimescale: 1000))
+    }
+
 }
 
 
