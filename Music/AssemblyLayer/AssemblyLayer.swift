@@ -68,7 +68,6 @@ class AssemblyLayer {
         
         trackInteractor.presenter = presenter
         trackInteractor.service = fechedDataWorker
-        trackInteractor.searchInteractor = searchInteractor
         
         presenter.view = viewController
 

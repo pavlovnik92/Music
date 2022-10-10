@@ -13,19 +13,25 @@ enum TrackModels {
         
         struct Request {
             enum RequestType {
-                case giveSongParameters(name: String, artistName: String, albumImage: String?, track: String)
+                case giveCurrentTrack(indexPath: IndexPath, array: [SongParameters])
+                case next
+                case back
             }
         }
         
         struct Response {
             enum responseType {
                 case presentSongParameters(name: String, artistName: String, imageView: UIImageView?, track: String)
+                case presentNextTrack(name: String, artistName: String, imageView: UIImageView?, track: String)
+                case presentBackTrack(name: String, artistName: String, imageView: UIImageView?, track: String)
             }
         }
         
         struct ViewModel {
             enum ViewModelType {
                 case displaySongParameters(name: String, artistName: String, imageView: UIImageView?, track: String)
+                case displayNextTrack(name: String, artistName: String, imageView: UIImageView?, track: String)
+                case displayBackTrack(name: String, artistName: String, imageView: UIImageView?, track: String)
             }
         }
     }

@@ -5,7 +5,6 @@
 //  Created by Alice Romanova on 28.08.2022.
 //
 
-import UIKit
 import SDWebImage
 
 protocol FechedDataLogic: AnyObject {

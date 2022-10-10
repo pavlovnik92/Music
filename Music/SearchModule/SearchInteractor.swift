@@ -38,15 +38,7 @@ final class SearchInteractor: SearchBisnessLigic {
 
         case .giveCurrentTrack(indexPath: let indexPath, musicArray: let musicArray):
             
-            let trackName = musicArray[indexPath.row].trackName
-            let artistName = musicArray[indexPath.row].artistName
-            let albumImage = musicArray[indexPath.row].artworkUrl100
-            let duration = musicArray[indexPath.row].previewUrl
-            
-        trackInteractor?.makeRequest(request: TrackModels.ModelType.Request.RequestType.giveSongParameters(name: trackName,
-                                                                                                           artistName: artistName,
-                                                                                                           albumImage: albumImage,
-                                                                                                           track: duration))
+            trackInteractor?.makeRequest(request: TrackModels.ModelType.Request.RequestType.giveCurrentTrack(indexPath: indexPath, array: musicArray))
         }
     }
 }

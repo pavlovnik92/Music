@@ -6,7 +6,7 @@
 //
 
 import AVKit
-import MediaPlayer
+
 
 protocol TrackDiasplayLogic: AnyObject {
     func displayData(data: TrackModels.ModelType.ViewModel.ViewModelType)
@@ -44,12 +44,18 @@ final class TrackViewController: UIViewController {
     private var currentTrackName: String!
     private var currentArtistName: String!
     
+    private var otherTrack: String!
+    private var otherAlbumImageView: UIImageView?
+    private var otherTrackName: String!
+    private var otherArtistName: String!
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-//        navigationItem.hidesBackButton = true
+        
+        setupVeiw()
+        
+        setupGesture()
 
         setupAlbumImageView()
         setupConstraintsForAlbumImageView()
@@ -84,6 +90,13 @@ final class TrackViewController: UIViewController {
         super.viewDidAppear(animated)
         
         setupPlayer()
+    }
+    
+    //MARK: - setupVeiw
+    
+    private func setupVeiw() {
+        view.backgroundColor = .systemBackground
+        navigationItem.hidesBackButton = true
     }
     
     //MARK: - Animations
@@ -133,6 +146,14 @@ final class TrackViewController: UIViewController {
         }
     }
     
+    //MARK: - setupGesture
+    
+    private func setupGesture() {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(goToRootViewController))
+        
+        view.addGestureRecognizer(swipe)
+    }
+    
     //MARK: - setupAlbumImageView
     
     private func setupAlbumImageView() {
@@ -174,7 +195,7 @@ final class TrackViewController: UIViewController {
         trackNameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 40).isActive = true
         trackNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         trackNameLabel.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        trackNameLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        trackNameLabel.heightAnchor.constraint(equalToConstant: 26).isActive = true
     }
     
     //MARK: - setupArtistNameLabel
@@ -230,7 +251,7 @@ final class TrackViewController: UIViewController {
         
         view.addSubview(timeLabel)
         
-        timeLabel.topAnchor.constraint(equalTo: trackSlider.bottomAnchor, constant: 10).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: trackSlider.bottomAnchor, constant: 7).isActive = true
         timeLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 23).isActive = true
         timeLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
         timeLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
@@ -240,6 +261,7 @@ final class TrackViewController: UIViewController {
     
     private func setupBackButton() {
         backButton.setImage(UIImage(named: "fast-forward"), for: .normal)
+        backButton.addTarget(self, action: #selector(goBack), for: .touchDown)
     }
     
     private func setupConstraintsForBackButton() {
@@ -266,16 +288,18 @@ final class TrackViewController: UIViewController {
         
         view.addSubview(pauseButton)
         
-        pauseButton.topAnchor.constraint(equalTo: backButton.topAnchor).isActive = true
+        pauseButton.topAnchor.constraint(equalTo: backButton.topAnchor, constant: -5).isActive = true
         pauseButton.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: 50).isActive = true
         pauseButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         pauseButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
     }
     
     //MARK: - setupForwardButton
     
     private func setupForwardButton() {
         forwardButton.setImage(UIImage(named: "fast-forward"), for: .normal)
+        forwardButton.addTarget(self, action: #selector(goForward), for: .touchUpInside)
     }
     
     private func setupConstraintsForForwardButton() {
@@ -283,7 +307,7 @@ final class TrackViewController: UIViewController {
         
         view.addSubview(forwardButton)
         
-        forwardButton.topAnchor.constraint(equalTo: pauseButton.topAnchor, constant: 3).isActive = true
+        forwardButton.topAnchor.constraint(equalTo: backButton.topAnchor).isActive = true
         forwardButton.leftAnchor.constraint(equalTo: pauseButton.rightAnchor, constant: 50).isActive = true
         forwardButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         forwardButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -324,6 +348,20 @@ final class TrackViewController: UIViewController {
         }
     }
     
+    //MARK: - @objc method "goBack"
+    
+    @objc private func goForward() {
+        interactor?.makeRequest(request: TrackModels.ModelType.Request.RequestType.next)
+        player.pause()
+        artistNameLabel.text = otherArtistName
+        trackNameLabel.text = otherTrackName
+        albumImageView.image = otherAlbumImageView?.image
+        let url = URL(string: otherTrack)
+        let item = AVPlayerItem(url: url!)
+        player.replaceCurrentItem(with: item)
+        player.play()
+    }
+    
     //MARK: - @objc method "rearrange"
     
     @objc private func rearrange() {
@@ -334,6 +372,24 @@ final class TrackViewController: UIViewController {
     
     @objc private func changeVolume() {
         player.volume = volumeSlider.value
+    }
+    
+    //MARK: - @objc method "goForward"
+    
+    @objc private func goBack() {
+        interactor?.makeRequest(request: TrackModels.ModelType.Request.RequestType.back)
+        player.pause()
+        artistNameLabel.text = otherArtistName
+        trackNameLabel.text = otherTrackName
+        albumImageView.image = otherAlbumImageView?.image
+        let url = URL(string: otherTrack)
+        let item = AVPlayerItem(url: url!)
+        player.replaceCurrentItem(with: item)
+        player.play()
+    }
+    
+    @objc private func goToRootViewController() {
+        router?.popViewController()
     }
 }
 
@@ -354,6 +410,18 @@ extension TrackViewController: TrackDiasplayLogic {
             currentAlbumImageView = imageView
             currentTrackName = name
             currentArtistName = artistName
+            
+        case .displayNextTrack(name: let name, artistName: let artistName, imageView: let imageView, track: let track):
+            otherTrack = track
+            otherAlbumImageView = imageView
+            otherTrackName = name
+            otherArtistName = artistName
+            
+        case .displayBackTrack(name: let name, artistName: let artistName, imageView: let imageView, track: let track):
+            otherTrack = track
+            otherAlbumImageView = imageView
+            otherTrackName = name
+            otherArtistName = artistName
         }
     }
 }
